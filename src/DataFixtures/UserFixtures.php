@@ -26,6 +26,8 @@ class UserFixtures extends Fixture
                 $user,
                 'lePassword'.$i
             ));
+            $user->setNom("Emanuela".$i);
+            $user->setKm(10 +$i);
             $manager->persist ($user);
         }
         $manager->flush();
