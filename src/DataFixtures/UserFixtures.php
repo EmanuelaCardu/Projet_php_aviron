@@ -14,7 +14,7 @@ class UserFixtures extends Fixture
 
     public function __construct(UserPasswordHasherInterface $passwordHasher)
     {
-         $this->passwordHasher = $passwordHasher;
+        $this->passwordHasher = $passwordHasher;
     }
     
     public function load(ObjectManager $manager)
@@ -23,9 +23,9 @@ class UserFixtures extends Fixture
             $user = new User();
             $user->setEmail ("user".$i."@gmail.com");
             $user->setPassword($this->passwordHasher->hashPassword(
-                 $user,
-                 'lePassword'.$i
-             ));
+                $user,
+                'lePassword'.$i
+            ));
             $manager->persist ($user);
         }
         $manager->flush();
