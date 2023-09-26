@@ -28,9 +28,13 @@ class CourEau
     #[ORM\ManyToMany(targetEntity: User::class, inversedBy: 'courEaux')]
     private Collection $User;
 
+    #[ORM\OneToMany(mappedBy: 'courEau', targetEntity: Photo::class)]
+    private Collection $Photo;
+
     public function __construct()
     {
         $this->User = new ArrayCollection();
+        $this->Photo = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -94,6 +98,36 @@ class CourEau
     public function removeUser(User $user): static
     {
         $this->User->removeElement($user);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Photo>
+     */
+    public function getPhoto(): Collection
+    {
+        return $this->Photo;
+    }
+
+    public function addPhoto(Photo $photo): static
+    {
+        if (!$this->Photo->contains($photo)) {
+            $this->Photo->add($photo);
+            $photo->setCourEau($this);
+        }
+
+        return $this;
+    }
+
+    public function removePhoto(Photo $photo): static
+    {
+        if ($this->Photo->removeElement($photo)) {
+            // set the owning side to null (unless already changed)
+            if ($photo->getCourEau() === $this) {
+                $photo->setCourEau(null);
+            }
+        }
 
         return $this;
     }
