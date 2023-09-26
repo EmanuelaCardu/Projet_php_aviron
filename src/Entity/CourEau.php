@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\CourEauRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -22,6 +24,14 @@ class CourEau
 
     #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: '0')]
     private ?string $distance = null;
+
+    #[ORM\ManyToMany(targetEntity: User::class, inversedBy: 'courEaux')]
+    private Collection $User;
+
+    public function __construct()
+    {
+        $this->User = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -60,6 +70,30 @@ class CourEau
     public function setDistance(string $distance): static
     {
         $this->distance = $distance;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, User>
+     */
+    public function getUser(): Collection
+    {
+        return $this->User;
+    }
+
+    public function addUser(User $user): static
+    {
+        if (!$this->User->contains($user)) {
+            $this->User->add($user);
+        }
+
+        return $this;
+    }
+
+    public function removeUser(User $user): static
+    {
+        $this->User->removeElement($user);
 
         return $this;
     }

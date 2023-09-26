@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
@@ -34,6 +36,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: '0', nullable: true)]
     private ?string $km = null;
+
+    #[ORM\ManyToMany(targetEntity: CourEau::class, mappedBy: 'User')]
+    private Collection $courEaux;
+
+    public function __construct()
+    {
+        $this->courEaux = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -125,6 +135,33 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setKm(?string $km): static
     {
         $this->km = $km;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, CourEau>
+     */
+    public function getCourEaux(): Collection
+    {
+        return $this->courEaux;
+    }
+
+    public function addCourEaux(CourEau $courEaux): static
+    {
+        if (!$this->courEaux->contains($courEaux)) {
+            $this->courEaux->add($courEaux);
+            $courEaux->addUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCourEaux(CourEau $courEaux): static
+    {
+        if ($this->courEaux->removeElement($courEaux)) {
+            $courEaux->removeUser($this);
+        }
 
         return $this;
     }
