@@ -9,7 +9,9 @@
 import './styles/app.css';
 // app.js
 
-// rajouter
+// rajouter le css à la main
+import 'bootstrap/dist/css/bootstrap.css';
+
 // jquery
 const $ = require ('jquery');
 window.jQuery = $;
