@@ -7,5 +7,13 @@
 
 // any CSS you import will output into a single css file (app.css in this case)
 import './styles/app.css';
+// app.js
 
-alert ("je suis app.js");
+// rajouter
+// jquery
+const $ = require ('jquery');
+window.jQuery = $;
+window.$ = $;
+// importer bootstrap
+import 'bootstrap';
+// alert ("je suis app.js");
