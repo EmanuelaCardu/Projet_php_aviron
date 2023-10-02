@@ -11,6 +11,7 @@ class HomeController extends AbstractController
     #[Route('/accueil', name: 'accueil')]
     public function index(): Response
     {
+        //faire select pour prendre la liste de la bd
         return $this->render('accueil/accueil.html.twig');
     }
 

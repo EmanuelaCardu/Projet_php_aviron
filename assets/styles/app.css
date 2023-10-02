@@ -1,3 +1,8 @@
 body {
-    background-color: lightgray;
+    background-color: rgb(161, 202, 230);
+}
+
+.nav {
+    background-color: rgb(161, 179, 161);
+    font-family: fantasy;
 }
