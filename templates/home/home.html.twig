@@ -9,8 +9,15 @@ barre navigation<br>
 liste cours d'eau<br>
 photo Europe<br>
 
+<h3> Les cours d'eau d'Europe <h3>
+{% for cour in cours %}
 
-
+<ul>
+<li> {{ cour.nom}} </li>
+<li> {{ cour.distance}} </li>
+</ul>
+  
+{% endfor %}
 
 
 
