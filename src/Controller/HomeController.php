@@ -11,39 +11,27 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class HomeController extends AbstractController
 {
     #[Route('/accueil/user', name: 'accueil_user')]
-    public function accueilUser(): Response
+    public function AfficheKmUser(ManagerRegistry $doctrine)
     {
+        $em = $doctrine->getManager();
+        $query =$em->createQuery("SELECT km FROM App\Entity\User km");
+        $resultat = $query->getResult();
+        $vars = ['km'=> $resultat];
 
-
-
-        return $this->render('accueil/accueil_user.html.twig');
+        return $this->render('accueil/accueil_user.html.twig', $vars);
     }
-    //faire select pour prendre la liste de la bd
+
 
 
 
     #[Route('/', name: 'home')]
-    public function homeAfficheCours(ManagerRegistry $doctrine){ 
-
-        $em= $doctrine->getManager(); 
-        $query = $em->createQuery ("SELECT cour FROM App\Entity\CourEau cour ORDER BY cour.distance ASC ");
-        $resultat= $query->getResult();
+    public function homeAfficheCours(ManagerRegistry $doctrine)
+    {
+        $em = $doctrine->getManager();
+        $query = $em->createQuery("SELECT cour FROM App\Entity\CourEau cour ORDER BY cour.distance ASC ");
+        $resultat = $query->getResult();
         $vars = ['cours' => $resultat];
 
-
-
-
-       
-       
-        //     $query = $em->createQuery ("SELECT livre.titre, livre.prix FROM App\Entity\Livre livre ".
-        //                             "WHERE livre.prix>15");
-        //     $resultat = $query->getResult();
-        //     $vars = ['livres'=> $resultat];
-        //     return $this->render ("exemples_dql/exemple_select_array_arrays.html.twig", $vars);
-        // }
-
-
-
-        return $this->render('home/home.html.twig',$vars);
+        return $this->render('home/home.html.twig', $vars);
     }
 }

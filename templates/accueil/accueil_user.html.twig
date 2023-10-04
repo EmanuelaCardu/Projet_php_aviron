@@ -4,16 +4,34 @@
 
 {% block body %}
 <h1>Bienvenue au site!</h1>
-ici bonjour le User<br>
-liste cours d'eau<br>
-formulaire pour inserer les km<br>
-affichage km total<br>
 
+
+Bienvenue au site {{ app.user.nom}}! <br>
+
+
+
+liste cours d'eau<br>
+//ici on affiche les cours d'eau dans deux div accordeon
+
+//d'abord les validées et après tous les autres
+
+
+
+
+<div>
+Vous avez cumulé {{app.user.km}} km
+</div>
+
+
+
+formulaire pour inserer les km<br>
 <nav class="navbar navbar-light bg-light">
   <form class="form-inline">
-    <input class="form-control mr-sm-2" type="text" placeholder="km" aria-label="km">
-    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">enregistrer</button>
+    <input class="form-control mr-sm-2" type="text" placeholder="Rajoutez vos km" aria-label="kmRajouter">
+    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Rajouter</button>
   </form>
 </nav>
+
+
 
 {% endblock %}
