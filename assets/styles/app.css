@@ -4,5 +4,10 @@ body {
 
 .nav {
     background-color: rgb(161, 179, 161);
-    font-family: fantasy;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+
+.km {
+    background-color: rgb(161, 179, 161);
+    
 }

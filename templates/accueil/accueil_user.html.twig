@@ -16,22 +16,69 @@ liste cours d'eau<br>
 //d'abord les validées et après tous les autres
 
 
-
-
 <div>
-Vous avez cumulé {{app.user.km}} km
+
+Vous avez cumulé  
+<div id="div_km_total">
+ {{app.user.km}} 
+</div>
+km
 </div>
 
+<form id ="form_km_saisis" action="{{ path('recup_km_form') }}" method="POST">
+    Km:
+    <input type="text" name="km" id="input_km">
+      
+    <button type="submit" id="btn_envoyer_km" value="Envoyer"> Envoyer </button>
+</form>
+
+    
+<div id="divKm"></div>
 
 
-formulaire pour inserer les km<br>
-<nav class="navbar navbar-light bg-light">
-  <form class="form-inline">
-    <input class="form-control mr-sm-2" type="text" placeholder="Rajoutez vos km" aria-label="kmRajouter">
-    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Rajouter</button>
-  </form>
-</nav>
+      {% block customJS %}
+      <!-- AJAX - AXIOS  -->
+      <script>
 
 
+          let btn_envoyerKm = document.getElementById("btn_envoyer_km");
+
+          btn_envoyerKm.addEventListener("click", function (event) {
+              event.preventDefault();
+
+              // obtenir les km saisis
+              let km_saisis = document.getElementById("input_km").value;
+
+              // prendre le total actuel du div             
+              let div_km_total = document.getElementById("div_km_total");
+              let km_total = parseFloat (div_km_total.textContent);
+              
+              // aditionner les kms de du div avec ceux de l'input et stocker dans le div
+              div_km_total.textContent = km_total + parseFloat (km_saisis);
+
+              console.log (km_total);
+              return;
+
+
+              axios({
+                  url: '{{path ("recup_km_form")}}',
+                  method: 'POST',
+                  headers: { 'Content-Type': 'multipart/form-data' },
+                  data: new FormData(document.getElementById("recup_km_form"))
+              })
+              .then(function (response) {
+                  // response.data est un objet qui correspond à l'array associatif envoyé dans le controller
+                  // JsonResponse a transformé l'array en JSON. Axios transforme le JSON en objet JS
+                  // (et on utilise ici la clé "leMessage")
+                  document.getElementById("divKm").innerHTML = response.data.divKm;
+                  console.log (response);
+              })
+              .catch(function (error) {
+                  console.log(error);
+              });
+          });    
+      </script>
+
+      {% endblock %}
 
 {% endblock %}
