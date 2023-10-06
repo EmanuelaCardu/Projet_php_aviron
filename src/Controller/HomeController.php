@@ -36,20 +36,23 @@ class HomeController extends AbstractController
         return $this->render('home/home.html.twig', $vars);
     }
 
-    #[Route("/recup/km/form", name: "recup_km_form")]
+    #[Route("/form/km/saisis", name: "form_km_saisis")]
     public function recupKmForm(Request $req)
     {
-        $km = $req->request->get('km'); 
-
+        
+        $km = $req->request->get('km');
+   
         return $this->render(
-            "accueil/accueil_user.html.twig",['km' => $km]);
+            "accueil/accueil_user.html.twig",
+            ['km' => $km]
+        );
     }
 
 
     #[Route("/form/affiche/km")]
-public function FormAfficheKm()
-{
-    //faire ici addition des km?
-    return $this->render("/accueil_user.html.twig");
-}
+    public function FormAfficheKm()
+    {
+        //faire ici addition des km?
+        return $this->render("/accueil_user.html.twig");
+    }
 }
