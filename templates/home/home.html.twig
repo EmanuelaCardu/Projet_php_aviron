@@ -18,34 +18,12 @@ photo Europe<br>
   <li> <button data-id= {{cour.id}} class="btn_voir"> Voir </button></li>
 </ul>
 
-<script>
-    let= btns_voir = document.getElementsByClassName ("btn_voir");
-    {# console.log ("btns_voir"); #}
-    ArrayFrom(btns_voir).forEach (function ("btn_voir"){
-      btn_voir.addEventListener("click",function(event){
-        let btn_voirClick = event.target;
-        //console.log(btn_voirClick.dataset.id)
-        
-        let formVoir = new FormData();
-        formVoir.append ("id", btn_voirClick.dataset.id);
-        axios.post ("/afficher/photo", formVoir,{
-          headers: {
-            'Content-Type': 'multipart/form-data',
-          },
-        })
-        .then(function(response){
-          console.log(response);
-        })
-        .catch (function (error){
-          console.log(error)
-        })
-      })
-    })
 
-</script>
 
   
 {% endfor %}
+
+
 
 
 
@@ -57,5 +35,35 @@ photo Europe<br>
     {# <a href="/register" class="btn btn-primary">S' enregistrer</a> #}
   </div>
 </div>
+
+{% block customJS %}
+  <script>
+    let= btns_voir = document.getElementsByClassName ("btn_voir");
+    {# console.log ("btns_voir"); #}
+    Array.from(btns_voir).forEach (function (btn_voir){
+      btn_voir.addEventListener("click",function(event){
+        let btn_voirClick = event.target;
+        console.log(btn_voirClick.dataset.id);
+        
+       
+        let formVoir = new FormData();
+        formVoir.append ("id", btn_voirClick.dataset.id);
+        axios.post ("/afficher/photo", formVoir,{
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        })
+        .then(function(response){
+          // modifier le dom pour afficher les photos
+
+          console.log(response);
+        })
+        .catch (function (error){
+          console.log(error)
+        })
+      })
+    })
+  </script>
+  {% endblock %}
 
 {% endblock %}
