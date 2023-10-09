@@ -13,9 +13,37 @@ photo Europe<br>
 {% for cour in cours %}
 
 <ul>
-<li> {{ cour.nom}} </li>
-<li> {{ cour.distance}} </li>
+  <li> {{ cour.nom}} </li>
+  <li> {{ cour.distance}} </li>
+  <li> <button data-id= {{cour.id}} class="btn_voir"> Voir </button></li>
 </ul>
+
+<script>
+    let= btns_voir = document.getElementsByClassName ("btn_voir");
+    {# console.log ("btns_voir"); #}
+    ArrayFrom(btns_voir).forEach (function ("btn_voir"){
+      btn_voir.addEventListener("click",function(event){
+        let btn_voirClick = event.target;
+        //console.log(btn_voirClick.dataset.id)
+        
+        let formVoir = new FormData();
+        formVoir.append ("id", btn_voirClick.dataset.id);
+        axios.post ("/afficher/photo", formVoir,{
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        })
+        .then(function(response){
+          console.log(response);
+        })
+        .catch (function (error){
+          console.log(error)
+        })
+      })
+    })
+
+</script>
+
   
 {% endfor %}
 
