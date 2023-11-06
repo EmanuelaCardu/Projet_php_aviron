@@ -11,3 +11,45 @@ body {
     background-color: rgb(161, 179, 161);
     
 }
+
+.divHome{
+    background-color: rgb(156, 140, 120);
+    
+}
+
+.divHome li {
+    list-style: none; 
+}
+
+.btn_voir {
+    border-radius: 50%;
+    background-color: rgb(100, 100, 140);
+    
+}
+
+h3 {
+   font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif ;
+}
+
+.divPhotos img{
+    width: 100px;
+    height: 100px;
+    
+}
+
+.cardCoursEau
+{
+    margin-left: 1rem;
+}
+.col-lg-4 {
+    flex: 0 0 auto;
+    width: 23.333%;
+  }
+
+/* <div class="d-flex flex-nowrap">
+  <div class="order-3 p-2">First flex item</div>
+  <div class="order-2 p-2">Second flex item</div>
+  <div class="order-1 p-2">Third flex item</div>
+</div> */
+    
+

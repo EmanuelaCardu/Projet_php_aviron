@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}detaille_cours_eau!
+{% endblock %}
+
+{% block body %}
+	<section id="about" class="about">
+		<div class="container">
+
+			<div class="section-title">
+				<h2>{{courEau.nom}}</h2>
+				<p>{{courEau.description}}</p>
+			</div>
+
+			<div class="row">
+
+				{% for Photo in courEau.Photo %}
+					<div class="col-lg-6 order-1 order-lg-2">
+
+						<img src="{{Photo.lien}}" class="img-fluid" alt="">
+					</div>
+
+
+				{% endfor %}
+				
+
+			</div>
+
+		</div>
+
+	{% endblock %}

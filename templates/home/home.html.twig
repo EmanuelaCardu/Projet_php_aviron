@@ -1,23 +1,61 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello HomeController!{% endblock %}
+{% block title %}Home{% endblock %}
 
 {% block body %}
 
-ici première page avec nom application<br>
+<h3>Bienvenue dans une application qui vous accompagne en aviron à la découverte des cours d'eau d'Europe <h3><br>
 
 
-photo Europe<br>
+
+
+<div class="card" style="width: 18rem;">
+  <img src="/images/europe.jpg" class="card-img-top" alt="carte d'Europe">
+  <div class="card-body">
+    <h5 class="card-title">Europe</h5>
+    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+    {# <a href="/register" class="btn btn-primary">S' enregistrer</a> #}
+  </div>
+</div>
 
 <h3> Les cours d'eau d'Europe <h3>
+
+
+			<div class="container-fluid mb-5">
+				<div class="row">
+					{% for cour in cours %}
+
+
+						<div class="cardCoursEau col-lg-4 mb-3 ml-3">
+							<div class="card" style="width: 18rem;">
+
+								<div class="card-body">
+									<h5 class="card-title">
+										{{ cour.nom}}
+										{{ cour.distance}}
+										KM</h5>
+									<p class="card-text">
+
+										<a href="{{ path('detaille_cours_eau', {'id': cour.id}) }}" class="btn btn-primary">Voir</a>
+										{# <button data-id={{cour.id}} class="btn_voir"> Voir </button>#}
+									</p>
+								</div>
+							</div>
+						</div>
+					{% endfor %}
+				</div>
+			</div>
+
 {% for cour in cours %}
-
-<ul>
-  <li> {{ cour.nom}} </li>
-  <li> {{ cour.distance}} </li>
-  <li> <button data-id= {{cour.id}} class="btn_voir"> Voir </button></li>
-</ul>
-
+<div class= "divHome">
+  <ul>
+    <li> {{ cour.nom}} </li>
+    <li> {{ cour.distance}} </li>
+    <li> <button data-id= {{cour.id}} class="btn_voir"> Voir </button></li>
+  </ul>
+  {# div pour contenir les photos #}
+  <div class="divPhotos"></div>
+</div>
 
 
   
@@ -27,27 +65,32 @@ photo Europe<br>
 
 
 
-<div class="card" style="width: 18rem;">
-  <img src="/images/europe.jpg" class="card-img-top" alt="...">
-  <div class="card-body">
-    <h5 class="card-title">Europe</h5>
-    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-    {# <a href="/register" class="btn btn-primary">S' enregistrer</a> #}
-  </div>
-</div>
+
 
 {% block customJS %}
   <script>
-    let= btns_voir = document.getElementsByClassName ("btn_voir");
+    let btns_voir = document.getElementsByClassName ("btn_voir");
+     
+
     {# console.log ("btns_voir"); #}
     Array.from(btns_voir).forEach (function (btn_voir){
+    
       btn_voir.addEventListener("click",function(event){
         let btn_voirClick = event.target;
-        console.log(btn_voirClick.dataset.id);
-        
-       
+        // obtenir le div dans lequel on rajoute les photos
+        let div_container = event.target.closest (".divHome").querySelector('.divPhotos');
+      
+        // le div est deja rempli, on le vide. Dans l'ideel on devrait utiliser des classes pour cacher/afficher
+        if(div_container.innerHTML != "") {
+          // on vide le div
+          div_container.innerHTML = "";
+          console.log ("vider");
+          return; // sortir de la fonction
+        };
+
         let formVoir = new FormData();
         formVoir.append ("id", btn_voirClick.dataset.id);
+
         axios.post ("/afficher/photo", formVoir,{
           headers: {
             'Content-Type': 'multipart/form-data',
@@ -55,8 +98,28 @@ photo Europe<br>
         })
         .then(function(response){
           // modifier le dom pour afficher les photos
+          let arrayPhotos = response.data.photos;
+          
+          // creer dans le div le code html pour afficher les photos
+          arrayPhotos.forEach ( function (objPhoto) {
+              let img = document.createElement('img');
 
-          console.log(response);
+              // Set the source (URL) of the image
+              img.src = objPhoto.lien;  // si disque, rajoutez le chemin "/images/" . photo.lien
+
+              // Append the image as a child to the div
+              div_container.appendChild(img);
+
+          });
+
+
+
+          console.log (response.data); 
+
+
+          // console.log(response);
+
+
         })
         .catch (function (error){
           console.log(error)

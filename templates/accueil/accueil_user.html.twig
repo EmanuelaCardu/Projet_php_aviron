@@ -1,14 +1,15 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello AccueilController!
+{% block title %}Accueil User
 {% endblock %}
 
 {% block body %}
-	<h1>Bienvenue au site!</h1>
+	
+	<h1>Bienvenue !</h1>
 
 
-	Bienvenue au site
-	{{ app.user.nom}}!
+	<h3>Bienvenue 
+	{{ app.user.nom}}!<h3>
 	<br>
 
 
@@ -16,7 +17,7 @@
 
 	<div>
 
-		Vous avez cumulé
+		Voici le km déjà parcourrus :
 		<div id="div_km_total">
 			{{app.user.km}}
 		</div>
@@ -32,6 +33,7 @@
 		</button>
 	</form>
 
+ {% include './accueil/accueil_user_accordion.html.twig' %} 
 
 
 
@@ -55,7 +57,7 @@
 
 
 
-				<!-- AJAX - AXIOS  -->
+			
 				axios({
 					url: '{{ path ("form_km_saisis") }}',
 					method: 'POST',
@@ -85,6 +87,11 @@
 		});
 		</script>
 
-	{% endblock %}
+	
 
+	{# {% include 'accueil/accueil_user_accordion.html.twig' %} #}
+	{# {% include 'accueil/accueil_user_accordion.html.twig' with {'coursValidees': coursValidees} %} #}
+	
+
+{% endblock %}
 {% endblock %}
