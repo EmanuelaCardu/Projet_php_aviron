@@ -14,15 +14,27 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class HomeController extends AbstractController
 {
+    // on fait une requette à la bd pour recuperer le nom des cours d'eau et la distance
+    #[Route('/', name: 'home')]
+    public function homeAfficheCours(ManagerRegistry $doctrine)
+    {
+        $em = $doctrine->getManager();
+        $query = $em->createQuery("SELECT cour FROM App\Entity\CourEau cour ORDER BY cour.distance ASC ");
+        $resultat = $query->getResult();
+        $vars = ['cours' => $resultat];
+        
+        return $this->render('home/home.html.twig', $vars);
+    }
+
+
     #[Route('/accueil/user', name: 'accueil_user')]
     public function AfficheKmUser(ManagerRegistry $doctrine)
     {
         $em = $doctrine->getManager();
         $query = $em->createQuery("SELECT km FROM App\Entity\User km");
         $resultat = $query->getResult();
-     
+    
 
-  
         $query = $em->createQuery("SELECT cour FROM App\Entity\CourEau cour");
         $resultat2 = $query->getResult();
 
@@ -33,11 +45,11 @@ class HomeController extends AbstractController
         $user = $this->getUser();
 
         foreach ($resultat2 as $cours) {
-            // voir si le user connecte est dans la liste de users de cette cours
+            // voir si le user connecté est dans la liste de users de cet cours
             if ($cours->getUser()->contains($user)) {
                 $coursValidees[] = $cours;
             } else {
-                // l'user n'est pqs dans la liste
+                // l'user n'est pas dans la liste
                 $coursNonValidees[] = $cours;
             }
         }
@@ -53,19 +65,6 @@ class HomeController extends AbstractController
         return $this->render('accueil/accueil_user.html.twig', $vars);
     }
 
-
-
-
-    #[Route('/', name: 'home')]
-    public function homeAfficheCours(ManagerRegistry $doctrine)
-    {
-        $em = $doctrine->getManager();
-        $query = $em->createQuery("SELECT cour FROM App\Entity\CourEau cour ORDER BY cour.distance ASC ");
-        $resultat = $query->getResult();
-        $vars = ['cours' => $resultat];
-        
-        return $this->render('home/home.html.twig', $vars);
-    }
 
     #[Route('/form/km/saisis', name: 'form_km_saisis')]
     public function recupKmForm(Request $req, ManagerRegistry $doctrine)
@@ -84,6 +83,7 @@ class HomeController extends AbstractController
     }
 
 
+
     #[Route('/form/affiche/km')]
     public function formAfficheKm()
     {
@@ -98,18 +98,12 @@ class HomeController extends AbstractController
     {
         // obtenir l'id du form post qu'on envoie depuis la vue (axios)
         $id = $request->request->get('id');
-   
 
-        //prendre ici les photos qui sont liés à l'id des CourEaux
-        // prendre le cours d'eau de la bd find($id)
-          // Utilisez l'EntityManager pour accéder à la base de données.
         $em = $doctrine->getManager();
-
-         // Utilisez la méthode find pour récupérer l'objet CoursEau correspondant à l'ID.
         $CourEau = $em->getRepository(CourEau::class)->find($id);
 
 
-         // accéder aux propriétés de $coursEau et les passer à votre vue.
+         // accéder aux propriétés de $coursEau et les passer à la vue.
         $nom = $CourEau->getNom();
         $description = $CourEau->getDescription();
         $distance = $CourEau->getDistance();
@@ -142,10 +136,8 @@ class HomeController extends AbstractController
         
     }
 
-   
 
-
-    //ici je prend tous les cours pour les afficher dans le accordion2
+    //on prend tous les cours pour les afficher dans le accordion
     #[Route('/accueil/useraccordion', name: 'accordion')]
         public function accordionCours(ManagerRegistry $doctrine)
     {
@@ -160,11 +152,11 @@ class HomeController extends AbstractController
         $user = $this->getUser();
 
         foreach ($resultat as $cours) {
-            // voir si le user connecte est dans la liste de users de cette cours
+            // voir si le user connecté est dans la liste de users de cette cours
             if ($cours->getUser()->contains($user)) {
                 $coursValidees[] = $cours;
             } else {
-                // l'user n'est pqs dans la liste
+                // l'user n'est pas dans la liste
                 $coursNonValidees[] = $cours;
             }
         }
@@ -176,55 +168,8 @@ class HomeController extends AbstractController
             'coursNonValidees' => $coursNonValidees
         ];
 
-
-
         return $this->render('accueil/accueil_user_accordion.html.twig', $vars);
         
     }
-
-
-
-// #[Route('/accueil/useraccordion', name: 'accordion')]
-
-
-
-
-//     public function accordionCours(ManagerRegistry $doctrine)
-// {
-//     $em = $doctrine->getManager();
-//     $user = $this->getUser(); // Obtenez l'utilisateur connecté
-
-//     // Récupérez l'ID du cours d'eau à valider (vous devez passer cet ID depuis le front-end)
-//     $coursId = $request->request->get('id');
-
-//     // Récupérez le cours d'eau à partir de l'ID
-//     $cours = $em->getRepository(CourEau::class)->find($coursId);
-
-//     // Assurez-vous que le cours d'eau existe
-//     if ($cours) {
-//         // Associez le cours d'eau à l'utilisateur
-//         $cours->addUser($user);
-
-//         // Marquez le cours d'eau comme validé
-//         $cours->setValide(true);
-
-//         // Enregistrez les modifications dans la base de données
-//         $em->flush();
-//     }
-
-//     // Rechargez les listes de cours d'eau validés et non validés
-//     $coursValidees = [];
-//     $coursNonValidees = [];
-
-//     // ... (Votre code pour séparer les cours d'eau en deux listes)
-
-//     // Passez les listes mises à jour au modèle Twig
-//     $vars = [
-//         'coursValidees' => $coursValidees,
-//         'coursNonValidees' => $coursNonValidees
-//     ];
-
-//     return $this->render('accueil/accueil_user_accordion.html.twig', $vars);
-// }
 
 }

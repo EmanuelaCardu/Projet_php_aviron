@@ -38,9 +38,6 @@
 
 
 
-
-
-
 	{% block customJS %}
 		<script>
 
@@ -54,10 +51,6 @@
 				let input_km = document.getElementById("input_km")
 				let km_saisis = input_km.value;
 
-
-
-
-			
 				axios({
 					url: '{{ path ("form_km_saisis") }}',
 					method: 'POST',
@@ -87,11 +80,6 @@
 		});
 		</script>
 
-	
-
-	{# {% include 'accueil/accueil_user_accordion.html.twig' %} #}
-	{# {% include 'accueil/accueil_user_accordion.html.twig' with {'coursValidees': coursValidees} %} #}
-	
 
 {% endblock %}
 {% endblock %}

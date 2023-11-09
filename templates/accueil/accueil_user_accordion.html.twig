@@ -1,23 +1,55 @@
 
-	
+	<div class="container-fluid mb-5">
+				<div class="row">
 
-<h3> Voici ce que vous avez déjà realisé! <h3>
-	{# liste cours d'eau<br>
-							ici on affiche les cours d'eau VALIDÉES #}
+                <div class="col-lg-6 mb-3 ml-3">
+<h3> Voici ce que vous avez encore à realiser! <h3>
+						{# ici on affiche les cours d'eau  NON VALIDÉES #} 
 
-	<h4><div class="accordion" id="accordionValidees">
+	<div class="accordion" id="accordionNonValidees">
         {# course validees #}
-		{% for cours in coursValidees %}
-			<div class="accordion-itemV">
+		{% for cours in coursNonValidees %}
+			<h4><div class="accordion-itemNV">
 				{# <h2 class="accordion-header" id="headingOne"> #}
 				<h2 class="accordion-header" id="heading{{ cours.id }}">
 					<button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
-						{{ cours.nom }}
+						{{ cours.nom }}	     {{ cours.distance }} Km
 					</button>
 				</h2>
 				<div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="heading{{ cours.id }}" data-bs-parent="#accordionExample">
 					<div class="accordion-body">
                     {{ cours.description }}
+                
+                    <button class="btn btn-primary buttonValider" data-route="/coursEau/valider/" data-id="{{ cours.id }} data-km=">Valider</button>  
+					</div>
+				</div>
+			</div><h4>
+		{% endfor %}
+	</div>
+    </div>
+						<div class="col-lg-6 mb-3 ml-3">
+
+
+
+
+<h3> Voici ce que vous avez déjà realisé! <h3>
+	{# liste cours d'eau<br>
+							ici on affiche les cours d'eau VALIDÉES #}
+
+	<div class="accordion" id="accordionValidees">
+        {# course validees #}
+		{% for cours in coursValidees %}
+			<h4><div class="accordion-itemV">
+				{# <h2 class="accordion-header" id="headingOne"> #}
+				<h2 class="accordion-header" id="heading{{ cours.id }}">
+					<button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+						{{ cours.nom }}  {{ cours.distance }} Km
+					</button>
+				</h2>
+				<div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="heading{{ cours.id }}" data-bs-parent="#accordionExample">
+					<div class="accordion-body">
+                    {{ cours.description }}
+                    
                         {# <button class="btn btn-primaryV">Valider</button> #}
 					</div>
 				</div>
@@ -25,119 +57,60 @@
 		{% endfor %}
 	</div>
 
-
-
-<h3> Voici ce que vous avez encore à realiser! <h3>
-						{# ici on affiche les cours d'eau  NON VALIDÉES #} 
-
-	<h4><div class="accordion" id="accordionNonValidees">
-        {# course validees #}
-		{% for cours in coursNonValidees %}
-			<div class="accordion-itemNV">
-				{# <h2 class="accordion-header" id="headingOne"> #}
-				<h2 class="accordion-header" id="heading{{ cours.id }}">
-					<button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
-						{{ cours.nom }}	
-					</button>
-				</h2>
-				<div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="heading{{ cours.id }}" data-bs-parent="#accordionExample">
-					<div class="accordion-body">
-                    {{ cours.description }}
-                    <button class="btn btn-primaryNV">Valider</button>  
-					</div>
-				</div>
-			</div><h4>
-		{% endfor %}
-	</div>
-
-
-{# <div id="coursValideesImages">
-    <ul>
-        {% for cours in coursValidees %}
-            <li>
-                <img src="{{ cours.lien }}" alt="{{ cours.nom }}">
-            </li>
-        {% endfor %}
-    </ul>
-</div> #}
-
-
-
-{# {% block customJS %}
-<script>
-    document.addEventListener("DOMContentLoaded", function() {
-        let btnsNV = document.querySelectorAll(".btn-primaryNV");
-
-        Array.from(btnsNV).forEach(function(btnNV) {
-            btnNV.addEventListener("click", function(event) {
-                event.preventDefault();
-                let btnNVClick = event.currentTarget;
-                let courEauId = btnNVClick.getAttribute("data-id");
-
-                let btnNVformVoir = new FormData();
-                btnNVformVoir.append("id", courEauId);
-
-                axios.post("/accueil/useraccordion", btnNVformVoir, {
-                    headers: {
-                        'Content-Type': 'multipart/form-data',
-                    },
-                })
-                .then(function(response) {
-                    // Modifier le DOM pour afficher les photos
-                    console.log(response);
-                    // Rechargez la page ou mettez à jour la liste sans rechargement de page
-                })
-                .catch(function(error) {
-                    console.log(error);
-                });
-            });
-        });
-    });
-</script>
-{% endblock %} #}
-
-
-	{# {% block customJS %}
-<script>
-    let btnsNV = document.querySelectorAll(".btn-primaryNV");
-    console.log ("btnsNV");
-
-    Array.from(btnsNV).forEach (function (btnNV){
-    btnNV.addEventListener("click",function(event){
-		event.preventDefault();
-                let btnNVClick = event.currentTarget;
-        //let btnNVClick = event.target; 
-		let courEauId = btnNVClick.getAttribute("data-id");
-        //console.log(btnNVClick.dataset.id);
-        
+</div>
 	
-        let btnNVformVoir = new FormData();
-        btnNVformVoir.append ("id", courEauId);
-        axios.post ("/accueil/useraccordion", btnNVformVoir,{
+
+</div></div>
+
+
+{% block customJS %}
+<script>
+
+
+// Axios pour ajouter au liste des validees
+let boutonsvalider = document.querySelectorAll('.buttonValider');
+// Parcourez la liste des boutons et ajoutez un écouteur d'événements à chacun
+boutonsvalider.forEach(function (boutonvalider) {
+    boutonvalider.addEventListener("click", AjouterListValider);
+});
+function AjouterListValider(event) {
+    event.preventDefault();
+
+
+    const coursId = event.target.dataset.id;
+console.log(coursId);
+    // on prend la route generée avec path du data-route du form
+    let formValider = new FormData();
+    formValider.append("id", coursId);
+
+
+    axios.post(event.target.dataset.route, formValider, {
         headers: {
-            'Content-Type': 'multipart/form-data',
+            'Content-Type': 'multipart/form-data'
         },
-        })
-        .then(function(response){
-          // modifier le dom pour afficher les photos
-
-        console.log(response);
-        })
-        .catch (function (error){
-        console.log(error)
-        })
-    })
-    })
-</script> #}
+    }).then(function (response) { 
 
 
-
-		
-
-
+            console.log('rajoute au valides');
+            location.reload();
 
 
+    }).catch(function (error) {
 
+        if (error.response) {
+            alert("probleme")
+            if (error.response.status === 404) {
+                alert(error.response.data.message);
+            }
+        }
+
+    });
+
+}
+
+
+</script>
+{% endblock %} 
 
 
 

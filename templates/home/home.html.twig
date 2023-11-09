@@ -3,20 +3,18 @@
 {% block title %}Home{% endblock %}
 
 {% block body %}
-
+<section>
 <h3>Bienvenue dans une application qui vous accompagne en aviron à la découverte des cours d'eau d'Europe <h3><br>
-
-
-
 
 <div class="card" style="width: 18rem;">
   <img src="/images/europe.jpg" class="card-img-top" alt="carte d'Europe">
   <div class="card-body">
     <h5 class="card-title">Europe</h5>
     <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-    {# <a href="/register" class="btn btn-primary">S' enregistrer</a> #}
+    {# <a href="/register" class="btn btn-primary">S' enregistrer</a>  #}
   </div>
 </div>
+</section>
 
 <h3> Les cours d'eau d'Europe <h3>
 
@@ -57,22 +55,15 @@
   <div class="divPhotos"></div>
 </div>
 
-
-  
 {% endfor %}
-
-
-
-
 
 
 
 {% block customJS %}
   <script>
     let btns_voir = document.getElementsByClassName ("btn_voir");
-     
+  
 
-    {# console.log ("btns_voir"); #}
     Array.from(btns_voir).forEach (function (btn_voir){
     
       btn_voir.addEventListener("click",function(event){
@@ -80,7 +71,7 @@
         // obtenir le div dans lequel on rajoute les photos
         let div_container = event.target.closest (".divHome").querySelector('.divPhotos');
       
-        // le div est deja rempli, on le vide. Dans l'ideel on devrait utiliser des classes pour cacher/afficher
+        // le div est déjà rempli, on le vide. Dans l'ideel on devrait utiliser des classes pour cacher/afficher
         if(div_container.innerHTML != "") {
           // on vide le div
           div_container.innerHTML = "";
@@ -100,14 +91,10 @@
           // modifier le dom pour afficher les photos
           let arrayPhotos = response.data.photos;
           
-          // creer dans le div le code html pour afficher les photos
+          //  code html pour afficher les photos
           arrayPhotos.forEach ( function (objPhoto) {
               let img = document.createElement('img');
-
-              // Set the source (URL) of the image
-              img.src = objPhoto.lien;  // si disque, rajoutez le chemin "/images/" . photo.lien
-
-              // Append the image as a child to the div
+              img.src = objPhoto.lien;  
               div_container.appendChild(img);
 
           });

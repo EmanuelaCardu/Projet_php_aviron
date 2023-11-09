@@ -21,20 +21,20 @@ body {
     list-style: none; 
 }
 
-.btn_voir {
-    border-radius: 50%;
-    background-color: rgb(100, 100, 140);
+/* .btn_voir { */
+    /* border-radius: 50%; */
+    /* background-color: rgb(100, 100, 140); */
     
-}
+/* } */
 
 h3 {
    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif ;
 }
 
 .divPhotos img{
-    width: 100px;
-    height: 100px;
-    
+    width: 200px;
+    height: 200px;
+
 }
 
 .cardCoursEau
