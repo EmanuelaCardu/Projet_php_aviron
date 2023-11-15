@@ -15,7 +15,7 @@ class PhotoFixtures extends Fixture implements DependentFixtureInterface
     {
         $faker= Factory::create();
 
-        //chercher tous les cours d'Eau
+        // chercher tous les cours d'Eau
         $repCourEaux = $manager->getRepository(CourEau::class);
         $arrayObjCourEaux = $repCourEaux->findAll();
 
@@ -42,4 +42,4 @@ class PhotoFixtures extends Fixture implements DependentFixtureInterface
             
         ];
     }
-}
+} 

@@ -6,15 +6,15 @@
 <section>
 <h3>Bienvenue dans une application qui vous accompagne en aviron à la découverte des cours d'eau d'Europe <h3><br>
 
-<div class="card" style="width: 18rem;">
+{# <div class="card" style="width: 18rem;">
   <img src="/images/europe.jpg" class="card-img-top" alt="carte d'Europe">
   <div class="card-body">
     <h5 class="card-title">Europe</h5>
     <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
     {# <a href="/register" class="btn btn-primary">S' enregistrer</a>  #}
-  </div>
+  {# </div>
 </div>
-</section>
+</section> #} 
 
 <h3> Les cours d'eau d'Europe <h3>
 
@@ -44,22 +44,22 @@
 				</div>
 			</div>
 
-{% for cour in cours %}
+{# {% for cour in cours %}
 <div class= "divHome">
   <ul>
     <li> {{ cour.nom}} </li>
     <li> {{ cour.distance}} </li>
     <li> <button data-id= {{cour.id}} class="btn_voir"> Voir </button></li>
-  </ul>
+  </ul> #}
   {# div pour contenir les photos #}
-  <div class="divPhotos"></div>
+  {# <div class="divPhotos"></div>
 </div>
 
-{% endfor %}
+{% endfor %} #}
 
-{% endblock %}
 
-{# {% block customJS %}
+
+{% block customJS %}
   <script>
     let btns_voir = document.getElementsByClassName ("btn_voir");
   
@@ -114,6 +114,6 @@
       })
     })
   </script>
-  {% endblock %} #}
+  {% endblock %}
 
-
+{% endblock %}

@@ -5,7 +5,7 @@ namespace App\DataFixtures;
 use Faker\Factory;
 use App\Entity\CourEau;
 use Doctrine\Persistence\ObjectManager;
-use Doctrine\Bundle\FixturesBundle\Fixture;
+use Doctrine\Bundle\FixturesBundle\Fixture; 
 
 class CourEauFixtures extends Fixture
 {
@@ -15,8 +15,7 @@ class CourEauFixtures extends Fixture
         for ($i = 0; $i < 10 ; $i++){
             $courEau = new CourEau();
             $courEau->setNom ("courEau".$i);
-            
-            
+
             $courEau->setDescription($faker->text());
             $courEau->setDistance(20 +$i);
             $manager->persist ($courEau);
@@ -26,4 +25,6 @@ class CourEauFixtures extends Fixture
 
         $manager->flush();
     }
-}
+} 
+
+
