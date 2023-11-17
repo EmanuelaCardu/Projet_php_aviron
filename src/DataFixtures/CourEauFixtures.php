@@ -42,6 +42,7 @@ class CourEauFixtures extends Fixture
         
         foreach ($arrayCsv as $ligneCsv){
             $qi = new CourEau ();
+            
             // $qi->setProposedBy($ligneCsv[1]);
             $qi->setNom($ligneCsv[1]);
             $qi->setDescription($ligneCsv[2]);
