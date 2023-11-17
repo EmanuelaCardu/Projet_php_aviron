@@ -1,8 +1,8 @@
 body {
-    /* background-color: rgb(161, 202, 230); */
-    background-image: url(/public/images/europe.jpg);
+    background-color: rgb(161, 202, 230);
+    /* background-image: url(/public/images/europe.jpg);
     background-size: cover;
-    background-position: center;
+    background-position: center; */
 
 }
 
